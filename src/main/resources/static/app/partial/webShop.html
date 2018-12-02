@@ -1,0 +1,92 @@
+<div ng-controller="furnitureStore">
+	<div class="page-header">
+		<h1>Furniture store</h1>
+	</div>
+	<div>
+		<div>
+			<form>
+				<div class="form-group">
+					<label for="iName">Item name</label>
+					<input type="text" class="form-control" id="iName" ng-model="newItem.itemName">
+				</div>
+				<div class="form-group">
+					<label for="price">Price</label>
+					<input type="text" class="form-control" id=""price"" ng-model="newItem.price">
+				</div>
+				<div class="form-group">
+					<label for="quantity">Quantity</label>
+					<input type="text" class="form-control" id="quantity" ng-model="newItem.quantity">
+				</div>
+				<div class="form-group">
+					<label for="category">Category</label>
+					<select id="category" class="form-control" ng-model="newItem.categoryId">
+						<option ng-repeat="x in categories" value="{{x.id}}">
+							{{x.categoryName}}
+						</option>
+					</select>
+				</div>
+		
+				<button class="btn btn-primary" ng-click="addItem()">Create new Item</button>
+				<div class="btn-group pull-right">
+					<button ng-click="searchButton()" class="btn btn-warning">{{defaultSearchButton}}</button>
+				</div>
+			</form>
+		</div>
+		<div ng-show="searchFormVisibility">
+			<form>
+				<div class="form-group">
+					<label for="searchName">Item name</label>
+					<input class="form-control" type="text" id="searchName" ng-model="searchItem.itemName">
+				</div>
+				<div class="form-group">
+					<label for="searchCat">Category</label>
+					<select id="searchCat" class="form-control" ng-model="searchItem.categoryId">
+						<option ng-repeat="x in categories" value="{{x.id}}">
+							{{x.categoryName}}
+						</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="maxPrice">Max price</label>
+					<input class="form-control" type="text" id=""maxPrice"" ng-model="searchItem.maxPrice">
+				</div>
+				<button ng-click="search()" class="btn btn-warning">Search item</button>
+				<div class="btn-group pull-right">
+					<button ng-click="clearSearch()" class="btn btn-warning">Clear</button>
+				</div>
+			</form>
+		</div>
+		<div>
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>Item name</th>
+						<th>Price</th>
+						<th>Quantity</th>
+						<th>Category</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="x in items">
+						<td>{{x.itemName}}</td>
+						<td>{{x.price}}</td>
+						<td>{{x.quantity}}</td>
+						<td>{{x.categoryName}}</td>
+						<td>
+							<input type="number" ng-model="x.purchaseQuantity">
+						</td>
+						<td>
+							<button ng-click="buyItem(x.id, x.purchaseQuantity)" class="btn btn-primary">Buy</button>
+							<button ng-click="goToEdit(x.id)" class="btn btn-warning">Edit</button>
+							<button ng-click="deleteItem(x.id)" class="btn btn-danger">Delete</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="btn-group pull-right">
+				<button ng-click="changePage(-1)" ng-disabled="pageNum == 0" class="btn btn-primary">Previous</button>
+				<button ng-click="changePage(1)" ng-disabled="!(pageNum < totalPages - 1)" class="btn btn-primary">Next</button>
+			</div>
+		</div>
+	</div>
+</div>
